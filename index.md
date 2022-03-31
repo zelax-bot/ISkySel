@@ -1,6 +1,6 @@
 ## Welcome to ISkySel Pages
 
-This repository matains the Java implementation of top-k QoS-centric service selection on the incomplete QoS dataset.
+This repository matains the Java implementation of interval-valued skyline service selection on the incomplete QoS dataset.
 
 You can read more information about the algorithm from our publication:
 
