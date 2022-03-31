@@ -1,37 +1,42 @@
-## Welcome to GitHub Pages
+## Welcome to ISkySel Pages
 
-You can use the [editor on GitHub](https://github.com/jhzhang98/ISkySel/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This repository matains the Java implementation of top-k QoS-centric service selection on the incomplete QoS dataset.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+You can read more information about the algorithm from our publication:
 
-### Markdown
+* Author, "paper name",Journal Name, state, year
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Dependencies
 
-```markdown
-Syntax highlighted code block
+Java 1.8 ([https://www.oracle.com/](https://www.oracle.com/))
 
-# Header 1
-## Header 2
-### Header 3
+### Usage
 
-- Bulleted
-- List
+#### Step 1. Read Data
 
-1. Numbered
-2. List
+We provide two methods to read unfilled data and filled respectively: ```
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+FileHandler.readData(): read data from current file
+DataHandler.buildIntervalData(): build interval data from imputed data
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+#### Step 2. Get Skyline
 
-### Jekyll Themes
+We provide ISkySel, Native and Threshold method, which are used in a similar way：
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/jhzhang98/ISkySel/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+```
+# ISkySel
+int[] skyline1 = new ISkySel().getSkyline(dataSparse, dataInterval, bins, topk);
 
-### Support or Contact
+# Threshold
+int[] skyline2 = new ISkySel().getSkylineNativeWithThreshold(dataSparse, dataInterval, bins, topk);
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+# Native
+int[] skyline3 = new ISkySel().getSkylineNative(dataSparse, dataInterval, bins, topk);
+```
+
+### Feedback
+
+If you find any bugs or errors, please post to our [issue page](https://github.com/jhzhang98/ISkySel/issues). Also for any enquire, you can drop an e-mail to our us ([jh.zhang98@qq.com](mailto:jh.zhang98@qq.com)).
+
