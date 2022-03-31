@@ -38,4 +38,4 @@ int[] skyline3 = new ISkySel().getSkylineNative(dataSparse, dataInterval, bins, 
 
 ### Feedback
 
-If you find any bugs or errors, please post to our [issue page](https://github.com/jhzhang98/ISkySel/issues). Also for any enquire, you can drop an e-mail to our us (our mail here](mailto:jh.zhang98@qq.com)).
+If you find any bugs or errors, please post to our [issue page](https://github.com/jhzhang98/ISkySel/issues). Also for any enquire, you can drop an e-mail to our us [our mail here](mailto:jh.zhang98@qq.com).
