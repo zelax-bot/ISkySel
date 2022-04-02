@@ -42,7 +42,7 @@ We prove two demos:
 
 ```
 usageDemo: the usage of three methods
-intervalDemo: show the importance of PDF and the condition of PDF is uniform distribution or not
+intervalDemo: show the importance of PDF
 ```
 
 ## Feedback
