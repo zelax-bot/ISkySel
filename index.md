@@ -36,13 +36,13 @@ int[] skyline2 = new ISkySel().getSkylineNativeWithThreshold(dataSparse, dataInt
 int[] skyline3 = new ISkySel().getSkylineNative(dataSparse, dataInterval, bins, topk);
 ```
 
-### Demo
+## Demo
 
 We prove two demos:
 
 ```
 usageDemo: the usage of three methods
-intervalDemo: show the importance of PDF and the condition of PDF is uniform distribution or not
+intervalDemo: show the importance of PDF
 ```
 
 ## Feedback
