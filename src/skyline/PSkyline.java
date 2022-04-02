@@ -15,8 +15,8 @@ public abstract class PSkyline {
     }
 
     /**
-     * 在每个柱子中，要左不要右
-     * 除了最后一个柱子特例，需要包含右边
+     * in each bin, cover left, not cover right -> [left, right)
+     * except the last bin -> [left, right]
      */
     private void initHist(double[][] dataNative) {
         this.cube = new double[dataNative[0].length][bins + 1];
@@ -56,7 +56,7 @@ public abstract class PSkyline {
     }
 
     /**
-     * 每个cube中概率前缀和，为后面计算interval概率进行优化
+     * prefix sum of freq to accelerate
      */
     private void initPrefixSum() {
         prefixSum = new double[freq.length][freq[0].length];
@@ -68,7 +68,7 @@ public abstract class PSkyline {
     }
 
     /**
-     * 取某个属性所有值
+     * get all value of one attribute
      */
     public static double[] getAttr(double[][] data, int index) {
         double[] res = new double[data.length];
@@ -77,83 +77,12 @@ public abstract class PSkyline {
         return res;
     }
 
-    /**
-     * 返回支配概率，允许继承后自定义
-     */
-    protected double histDominate(double[][][] dataFilled, int pIndex, int qIndex) {
-        double prob = 1.0;
-        for (int j = 0; j < dataFilled[0][0].length; j++) {
-            double[] p = {dataFilled[0][pIndex][j], dataFilled[1][pIndex][j]};
-            double[] q = {dataFilled[0][qIndex][j], dataFilled[1][qIndex][j]};
-            double localProb = 1;
-            double existProb = 1;
-
-            if (isPoint(p) && isPoint(q)) {
-                if (p[0] < q[0]) return 0;
-            } else if (isPoint(p)) {
-                if (p[1] <= q[0]) return 0;
-                else if (p[0] < q[1]) {
-                    localProb = histProb(j, q[0], p[0]);
-                    existProb = histProb(j, q[0], q[1]);
-                    prob *= (localProb / existProb);
-                }
-            } else if (isPoint(q)) {
-                if (p[1] <= q[0]) return 0;
-                else if (p[0] < q[0]) {
-                    localProb = histProb(j, q[0], p[1]);
-                    existProb = histProb(j, p[0], p[1]);
-                    prob *= (localProb / existProb);
-                }
-            } else {
-                if (p[0] >= q[1]) {
-                    continue;
-                } else if (p[1] <= q[0]) {
-                    return 0;
-                } else if (q[0] <= p[0] && p[1] <= q[1]) {
-                    localProb = 0.5 * histProb(j, p[0], p[1]) * histProb(j, p[0], p[1]);
-                    localProb += histProb(j, p[0], p[1]) * histProb(j, q[0], p[0]);
-                } else if (p[0] <= q[0] && q[1] <= p[1]) {
-                    localProb = 0.5 * histProb(j, q[0], q[1]) * histProb(j, q[0], q[1]);
-                    localProb += histProb(j, q[1], p[1]) * histProb(j, q[0], q[1]);
-                } else if (p[0] <= q[0] && q[0] <= p[1] && p[1] <= q[1]) {
-                    localProb = 0.5 * histProb(j, q[0], p[1]) * histProb(j, q[0], p[1]);
-                } else if (q[0] <= p[0] && p[0] <= q[1] && q[1] <= p[1]) {
-                    localProb = (0.5 * histProb(j, p[0], q[1]) * histProb(j, p[0], q[1]))
-                            + histProb(j, q[1], p[1]) * histProb(j, q[0], q[1])
-                            + histProb(j, p[0], q[1]) * histProb(j, q[0], p[0]);
-                } else {
-                    System.out.println("Wrong!\n");
-                    System.out.println(Arrays.toString(p));
-                    System.out.println(Arrays.toString(q));
-                    System.exit(-1);
-                }
-                existProb = histProb(j, p[0], p[1]) * histProb(j, q[0], q[1]);
-                if (localProb / existProb > 1.00001) {
-                    System.out.println("debug" + j);
-                    System.exit(-1);
-                }
-                prob = prob * localProb / existProb;
-            }
-        }
-        return prob;
-    }
-
-    /**
-     * 判断这个interval是否为一个point
-     */
     protected boolean isPoint(double[] q) {
         return Math.abs(q[0] - q[1]) <= 1e-8;
     }
 
     /**
-     * 判断这个interval是否为一个point
-     */
-    protected boolean isPoint(double s, double e) {
-        return isPoint(new double[]{s, e});
-    }
-
-    /**
-     * 返回第index个属性上的(left, right) interval的概率
+     * P([left, right]) of attribute index
      */
     protected double histProb(int index, double left, double right) {
         if (left == right)

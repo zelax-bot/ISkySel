@@ -1,6 +1,5 @@
 import skyline.CompleteSkyline;
 import skyline.ISkySel;
-import sun.awt.windows.WPrinterJob;
 import tool.DataHandler;
 import tool.Evaluator;
 import tool.FileHandler;
@@ -8,12 +7,13 @@ import tool.FileHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class demo {
+public class UsageDemo {
     public static void main(String[] args) {
         Evaluator ev = new Evaluator();
 
         double[][] dataOrigin = FileHandler.readData("data/qws_normal.txt", false);
-        double[][] dataSparse = FileHandler.readData("data/m_rate_0.1_time_0.txt", false);
+        double[][] dataSparse = FileHandler.readData("data/qws_rate_0.1_time_0.txt", false);
+        assert dataSparse == null;
 
         List<double[][]> dataImpute = new ArrayList<>();
         for (int i = 0; i < 5; i++) {

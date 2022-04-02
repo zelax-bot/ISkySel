@@ -18,10 +18,11 @@ public class ISkySel extends PSkyline {
 
     /**
      * ISkySel method
+     *
      * @param dataNative origin data
      * @param dataFilled interval-filled data
-     * @param bins hist bins
-     * @param topk top-k
+     * @param bins       hist bins
+     * @param topk       top-k
      * @return index of top-k services (0 start)
      */
     public int[] getSkyline(double[][] dataNative, double[][][] dataFilled, int bins, int topk) {
@@ -87,7 +88,7 @@ public class ISkySel extends PSkyline {
                 if (i == j) {
                     continue;
                 }
-                prob *= (1 - histDominateNew(dataFilled, j, i, probSmaller));
+                prob *= (1 - histDominate(dataFilled, j, i, probSmaller));
                 if (prob < threshold) {
                     break;
                 }
@@ -118,7 +119,7 @@ public class ISkySel extends PSkyline {
                 double domProb = 0;
                 for (int j = 0; j < n; j++) {
                     if (index == j) continue;
-                    domProb += histDominateNew(dataFilled, index, j, probSmaller);
+                    domProb += histDominate(dataFilled, index, j, probSmaller);
                 }
                 queue.add(new double[]{index, service[1], domProb});
             }
@@ -139,10 +140,11 @@ public class ISkySel extends PSkyline {
 
     /**
      * native method
+     *
      * @param dataNative origin data
      * @param dataFilled interval-filled data
-     * @param bins hist bins
-     * @param topk top-k
+     * @param bins       hist bins
+     * @param topk       top-k
      * @return index of top-k services (0 start)
      */
     public int[] getSkylineNative(double[][] dataNative, double[][][] dataFilled, int bins, int topk) {
@@ -186,8 +188,8 @@ public class ISkySel extends PSkyline {
                 if (i == j) {
                     continue;
                 }
-                prob *= (1 - histDominateNew(dataFilled, j, i, probSmaller));
-                probDominate += histDominateNew(dataFilled, i, j, probSmaller);
+                prob *= (1 - histDominate(dataFilled, j, i, probSmaller));
+                probDominate += histDominate(dataFilled, i, j, probSmaller);
             }
             queue.add(new double[]{i, prob, probDominate});
             if (queue.size() > topk) {
@@ -208,10 +210,11 @@ public class ISkySel extends PSkyline {
 
     /**
      * native with threshold method
+     *
      * @param dataNative origin data
      * @param dataFilled interval-filled data
-     * @param bins hist bins
-     * @param topk top-k
+     * @param bins       hist bins
+     * @param topk       top-k
      * @return index of top-k services (0 start)
      */
     public int[] getSkylineNativeWithThreshold(double[][] dataNative, double[][][] dataFilled, int bins, int topk) {
@@ -259,7 +262,7 @@ public class ISkySel extends PSkyline {
                 if (i == j) {
                     continue;
                 }
-                prob *= (1 - histDominateNew(dataFilled, j, i, probSmaller));
+                prob *= (1 - histDominate(dataFilled, j, i, probSmaller));
                 if (prob < threshold) {
                     break;
                 }
@@ -290,7 +293,7 @@ public class ISkySel extends PSkyline {
                 double domProb = 0;
                 for (int j = 0; j < n; j++) {
                     if (index == j) continue;
-                    domProb += histDominateNew(dataFilled, index, j, probSmaller);
+                    domProb += histDominate(dataFilled, index, j, probSmaller);
                 }
                 queue.add(new double[]{index, service[1], domProb});
             }
@@ -309,7 +312,7 @@ public class ISkySel extends PSkyline {
         return res;
     }
 
-    private double histDominateNew(double[][][] dataFilled, int pIndex, int qIndex, double[][][] probSmaller) {
+    public double histDominate(double[][][] dataFilled, int pIndex, int qIndex, double[][][] probSmaller) {
         double prob = 1.0;
         for (int j = 0; j < dataFilled[0][0].length; j++) {
             double[] p = {dataFilled[0][pIndex][j], dataFilled[1][pIndex][j]};
@@ -322,15 +325,15 @@ public class ISkySel extends PSkyline {
             } else if (isPoint(p)) {
                 if (p[1] <= q[0]) return 0;
                 else if (p[0] < q[1]) {
-                    localProb = histProbNew(j, qIndex, 0, pIndex, 0, probSmaller);
-                    existProb = histProbNew(j, qIndex, 0, qIndex, 1, probSmaller);
+                    localProb = histProb(j, qIndex, 0, pIndex, 0, probSmaller);
+                    existProb = histProb(j, qIndex, 0, qIndex, 1, probSmaller);
                     prob *= (localProb / existProb);
                 }
             } else if (isPoint(q)) {
                 if (p[1] <= q[0]) return 0;
                 else if (p[0] < q[0]) {
-                    localProb = histProbNew(j, qIndex, 0, pIndex, 1, probSmaller);
-                    existProb = histProbNew(j, pIndex, 0, pIndex, 1, probSmaller);
+                    localProb = histProb(j, qIndex, 0, pIndex, 1, probSmaller);
+                    existProb = histProb(j, pIndex, 0, pIndex, 1, probSmaller);
                     prob *= (localProb / existProb);
                 }
             } else {
@@ -339,33 +342,33 @@ public class ISkySel extends PSkyline {
                 } else if (p[1] <= q[0]) {
                     return 0;
                 } else if (q[0] <= p[0] && p[1] <= q[1]) {
-                    localProb = 0.5 * histProbNew(j, pIndex, 0, pIndex, 1, probSmaller)
-                            * histProbNew(j, pIndex, 0, pIndex, 1, probSmaller);
-                    localProb += histProbNew(j, pIndex, 0, pIndex, 1, probSmaller)
-                            * histProbNew(j, qIndex, 0, pIndex, 0, probSmaller);
+                    localProb = 0.5 * histProb(j, pIndex, 0, pIndex, 1, probSmaller)
+                            * histProb(j, pIndex, 0, pIndex, 1, probSmaller);
+                    localProb += histProb(j, pIndex, 0, pIndex, 1, probSmaller)
+                            * histProb(j, qIndex, 0, pIndex, 0, probSmaller);
                 } else if (p[0] <= q[0] && q[1] <= p[1]) {
-                    localProb = 0.5 * histProbNew(j, qIndex, 0, qIndex, 1, probSmaller)
-                            * histProbNew(j, qIndex, 0, qIndex, 1, probSmaller);
-                    localProb += histProbNew(j, qIndex, 1, pIndex, 1, probSmaller)
-                            * histProbNew(j, qIndex, 0, qIndex, 1, probSmaller);
+                    localProb = 0.5 * histProb(j, qIndex, 0, qIndex, 1, probSmaller)
+                            * histProb(j, qIndex, 0, qIndex, 1, probSmaller);
+                    localProb += histProb(j, qIndex, 1, pIndex, 1, probSmaller)
+                            * histProb(j, qIndex, 0, qIndex, 1, probSmaller);
                 } else if (p[0] <= q[0] && q[0] <= p[1] && p[1] <= q[1]) {
-                    localProb = 0.5 * histProbNew(j, qIndex, 0, pIndex, 1, probSmaller)
-                            * histProbNew(j, qIndex, 0, pIndex, 1, probSmaller);
+                    localProb = 0.5 * histProb(j, qIndex, 0, pIndex, 1, probSmaller)
+                            * histProb(j, qIndex, 0, pIndex, 1, probSmaller);
                 } else if (q[0] <= p[0] && p[0] <= q[1] && q[1] <= p[1]) {
-                    localProb = (0.5 * histProbNew(j, pIndex, 0, qIndex, 1, probSmaller)
-                            * histProbNew(j, pIndex, 0, qIndex, 1, probSmaller))
-                            + histProbNew(j, qIndex, 1, pIndex, 1, probSmaller)
-                            * histProbNew(j, qIndex, 0, qIndex, 1, probSmaller)
-                            + histProbNew(j, pIndex, 0, qIndex, 1, probSmaller)
-                            * histProbNew(j, qIndex, 0, pIndex, 0, probSmaller);
+                    localProb = (0.5 * histProb(j, pIndex, 0, qIndex, 1, probSmaller)
+                            * histProb(j, pIndex, 0, qIndex, 1, probSmaller))
+                            + histProb(j, qIndex, 1, pIndex, 1, probSmaller)
+                            * histProb(j, qIndex, 0, qIndex, 1, probSmaller)
+                            + histProb(j, pIndex, 0, qIndex, 1, probSmaller)
+                            * histProb(j, qIndex, 0, pIndex, 0, probSmaller);
                 } else {
                     System.out.println("Wrong!\n");
                     System.out.println(Arrays.toString(p));
                     System.out.println(Arrays.toString(q));
                     System.exit(-1);
                 }
-                existProb = histProbNew(j, pIndex, 0, pIndex, 1, probSmaller)
-                        * histProbNew(j, qIndex, 0, qIndex, 1, probSmaller);
+                existProb = histProb(j, pIndex, 0, pIndex, 1, probSmaller)
+                        * histProb(j, qIndex, 0, qIndex, 1, probSmaller);
                 if (existProb < 1e-10) continue;
                 prob = prob * localProb / existProb;
             }
@@ -376,22 +379,23 @@ public class ISkySel extends PSkyline {
     /**
      * interval [a, b]
      *
-     * @param index       哪个列
-     * @param startIndex  属性值a是第几个服务
-     * @param start       属性值a是第startIndex个服务的第index个属性(interval)的开始还是结束
-     * @param endIndex    属性值b是第几个服务
-     * @param end         属性值b是第endIndex个服务的第index个属性(interval)的开始还是结束
-     * @param probSmaller probSmaller[0][i][j]是0 - dataFilled[0][i][j]的概率
-     * @return [a, b]的概率
+     * @param index       witch column
+     * @param startIndex  which service index of a
+     * @param start       the start or end of a in startIndex service
+     * @param endIndex    which service index of b
+     * @param end         the start or end of b in endIndex service
+     * @param probSmaller probSmaller
+     * @return P([a, b])
      */
-    private double histProbNew(int index, int startIndex, int start, int endIndex, int end, double[][][] probSmaller) {
+    public double histProb(int index, int startIndex, int start, int endIndex, int end, double[][][] probSmaller) {
         return probSmaller[end][endIndex][index] - probSmaller[start][startIndex][index];
     }
 
     /**
-     * 为第i个属性建立前缀概率和，使得res.get(right) - res.get(left)为[left, right]的概率
+     * to make
+     * res.get(right) - res.get(left) = P([left, right])
      */
-    private void buildProbMatrix(double[][][] dataFilled, int index) {
+    public void buildProbMatrix(double[][][] dataFilled, int index) {
         // 排序前去重
         List<Double> attr = new ArrayList<>(
                 new HashSet<>(getValidAttr(dataFilled, index)));
