@@ -6,22 +6,22 @@ You can read more information about the algorithm from our publication:
 
 * Author, "paper name",Journal Name, state, year
 
-### Dependencies
+## Dependencies
 
 Java 1.8 ([https://www.oracle.com/](https://www.oracle.com/))
 
-### Usage
+## Usage
 
-#### Step 1. Read Data
+### Step 1. Read Data
 
-We provide two methods to read unfilled data and filled respectively: 
+We provide two methods to read unfilled data and filled respectively:
 
 ```
 FileHandler.readData(): read data from current file
 DataHandler.buildIntervalData(): build interval data from imputed data
 ```
 
-#### Step 2. Get Skyline
+### Step 2. Get Skyline
 
 We provide ISkySel, Native and Threshold method, which are used in a similar way：
 
@@ -36,6 +36,15 @@ int[] skyline2 = new ISkySel().getSkylineNativeWithThreshold(dataSparse, dataInt
 int[] skyline3 = new ISkySel().getSkylineNative(dataSparse, dataInterval, bins, topk);
 ```
 
-### Feedback
+### Demo
+
+We prove two demos:
+
+```
+usageDemo: the usage of three methods
+intervalDemo: show the importance of PDF and the condition of PDF is uniform distribution or not
+```
+
+## Feedback
 
 If you find any bugs or errors, please post to our [issue page](https://github.com/jhzhang98/ISkySel/issues). Also for any enquire, you can drop an e-mail to our us [our mail here](mailto:1910644713@qq.com).
