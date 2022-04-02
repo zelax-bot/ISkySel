@@ -4,7 +4,7 @@ This repository matains the Java implementation of interval-valued skyline servi
 
 You can read more information about the algorithm from our publication:
 
-* Author, "paper name",Journal Name, state, year
+* Interval-valued Skyline Web Service Selection on Incomplete QoS, submmited for ICWS 2022.
 
 ## Dependencies
 
@@ -38,11 +38,11 @@ int[] skyline3 = new ISkySel().getSkylineNative(dataSparse, dataInterval, bins, 
 
 ### Demo
 
-We prove two demos:
+We prove two demos (src/):
 
 ```
-usageDemo[click](https://github.com/zelax-bot/ISkySel/blob/2d19dfb4a75037e624edfc7ff21163f22c2b6cdf/src/IntervalDemo.java): the usage of three methods
-intervalDemo[click](https://github.com/zelax-bot/ISkySel/blob/2d19dfb4a75037e624edfc7ff21163f22c2b6cdf/src/IntervalDemo.java): show the importance of PDF and the condition of PDF is uniform distribution or not
+usageDemo: the usage of three methods
+intervalDemo: show the importance of PDF and the condition of PDF is uniform distribution or not
 ```
 
 ## Feedback
