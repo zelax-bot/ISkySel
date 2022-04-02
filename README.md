@@ -41,8 +41,8 @@ int[] skyline3 = new ISkySel().getSkylineNative(dataSparse, dataInterval, bins, 
 We prove two demos:
 
 ```
-usageDemo: the usage of three methods
-intervalDemo: show the importance of PDF
+usageDemo[click](https://github.com/zelax-bot/ISkySel/blob/2d19dfb4a75037e624edfc7ff21163f22c2b6cdf/src/IntervalDemo.java): the usage of three methods
+intervalDemo[click](https://github.com/zelax-bot/ISkySel/blob/2d19dfb4a75037e624edfc7ff21163f22c2b6cdf/src/IntervalDemo.java): show the importance of PDF and the condition of PDF is uniform distribution or not
 ```
 
 ## Feedback
