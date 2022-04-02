@@ -14,7 +14,7 @@ Java 1.8 ([https://www.oracle.com/](https://www.oracle.com/))
 
 #### Step 1. Read Data
 
-We provide two methods to read unfilled data and filled respectively: ```
+We provide two methods to read unfilled data and filled respectively: 
 
 ```
 FileHandler.readData(): read data from current file
@@ -38,4 +38,4 @@ int[] skyline3 = new ISkySel().getSkylineNative(dataSparse, dataInterval, bins, 
 
 ### Feedback
 
-If you find any bugs or errors, please post to our [issue page](https://github.com/jhzhang98/ISkySel/issues). Also for any enquire, you can drop an e-mail to our us [our mail here](mailto:jh.zhang98@qq.com).
+If you find any bugs or errors, please post to our [issue page](https://github.com/jhzhang98/ISkySel/issues). Also for any enquire, you can drop an e-mail to our us [our mail here](mailto:1910644713@qq.com).
