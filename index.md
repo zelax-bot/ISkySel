@@ -4,7 +4,7 @@ This repository matains the Java implementation of interval-valued skyline servi
 
 You can read more information about the algorithm from our publication:
 
-* Author, "paper name",Journal Name, state, year
+* Interval-valued Skyline Web Service Selection on Incomplete QoS, submmited for ICWS 2022.
 
 ## Dependencies
 
@@ -38,7 +38,7 @@ int[] skyline3 = new ISkySel().getSkylineNative(dataSparse, dataInterval, bins, 
 
 ## Demo
 
-We prove two demos:
+We prove two demos(/src):
 
 ```
 usageDemo: the usage of three methods
