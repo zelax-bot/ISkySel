@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Main {
     public static File[] readFileGUI(String title) {
@@ -28,16 +29,20 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        Locale.setDefault(Locale.ENGLISH);
+
         String message = "Please Choose One Complete Dataset";
         System.out.println(message);
         File[] fileComplete = readFileGUI(message);
         double[][] dataComplete = FileHandler.readData(fileComplete[0]);
 
         message = "Please Choose Origin Incomplete Dataset";
+        System.out.println(message);
         File[] filesNative = readFileGUI(message);
         double[][] dataNative = FileHandler.readData(filesNative[0]);
 
         message = "Please Choose Multiple Impute Dataset";
+        System.out.println(message);
         File[] files = readFileGUI(message);
         List<double[][]> dataAll = new ArrayList<>();
         for (File file : files) {
