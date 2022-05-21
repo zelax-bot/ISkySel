@@ -15,8 +15,36 @@ public class FileHandler {
     public static double[][] readData(String filePath, boolean withHead) {
         if (withHead)
             return readFileWithHead(filePath);
-        List<double[]> data = new ArrayList<>();
         File file = new File(filePath);
+        return readData(file);
+    }
+
+    public static double[][] readFileWithHead(String filePath) {
+        File file = new File(filePath);
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String firstLine = br.readLine();
+            String[] tmp = firstLine.split(",|[ ]");
+            int row = Integer.parseInt(tmp[0]);
+            int col = Integer.parseInt(tmp[1]);
+            double[][] data = new double[row][col];
+            String line = br.readLine();
+            int i = 0;
+            while (null != line) {
+                String[] dataLine = line.split(",|[ ]");
+                for (int j = 0; j < col; j++)
+                    data[i][j] = Double.parseDouble(dataLine[j]);
+                i++;
+                line = br.readLine();
+            }
+            return data;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static double[][] readData(File file){
+        List<double[]> data = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line = br.readLine();
@@ -42,30 +70,6 @@ public class FileHandler {
             for (int i = 0; i < data.size(); i++)
                 res[i] = data.get(i);
             return res;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static double[][] readFileWithHead(String filePath) {
-        File file = new File(filePath);
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String firstLine = br.readLine();
-            String[] tmp = firstLine.split(",|[ ]");
-            int row = Integer.parseInt(tmp[0]);
-            int col = Integer.parseInt(tmp[1]);
-            double[][] data = new double[row][col];
-            String line = br.readLine();
-            int i = 0;
-            while (null != line) {
-                String[] dataLine = line.split(",|[ ]");
-                for (int j = 0; j < col; j++)
-                    data[i][j] = Double.parseDouble(dataLine[j]);
-                i++;
-                line = br.readLine();
-            }
-            return data;
         } catch (IOException e) {
             e.printStackTrace();
         }
