@@ -11,53 +11,31 @@ You can read more information about the algorithm from our publication:
 Java 1.8 ([https://www.oracle.com/](https://www.oracle.com/))
 
 ## Usage
+We provide two ways to use IQSRec: (1) use java instance (2) gui start
 
-### One Method: Use Instance
+### Instance
+
+You can get the usage by reading `UsageDemo.java`.
+
+### GUI Start
 
 #### Step 1. Read Data
+Be attention, the format of input should be like in the 'data/qws_rate_0.1.txt' (separated by space or ',')
 
-We provide two methods to read unfilled data and filled respectively:
+![Read File](fig/read_data.jpg)
 
-```
-FileHandler.readData(): read data from current file
-DataHandler.buildIntervalData(): build interval data from imputed data
-```
+#### Step 2. Select Data
+In this step, you can select the dimensions and services you're interested.
+![Select](fig/select_data.jpg)
 
-#### Step 2. Get Skyline
+#### Step 3. Normalize Data
 
-We provide ISkySel, Native and Threshold method, which are used in a similar way：
-
-```
-# ISkySel
-int[] skyline1 = new ISkySel().getSkyline(dataSparse, dataInterval, bins, topk);
-
-# Threshold
-int[] skyline2 = new ISkySel().getSkylineNativeWithThreshold(dataSparse, dataInterval, bins, topk);
-
-# Native
-int[] skyline3 = new ISkySel().getSkylineNative(dataSparse, dataInterval, bins, topk);
-```
-
-#### Demo
-
-We prove two demos (src/):
-
-```
-usageDemo: the usage of three methods
-intervalDemo: show the importance of PDF and the condition of PDF is uniform distribution or not
-```
-
-### Method 2: Use GUI
-
-We prove one gui demo (Main.java) to use ISkySel:
-
-#### Step 1. Select Complete Dataset
-![step1](fig/step1.jpg)
-#### Step 2. Select Incomplete Dataset
-![step2](fig/step2.jpg)
-#### Step 4. Select Multiple Impute Dataset
-Attention! In this step, you should choose at least two files.
-![step3](fig/step3.jpg)
+By default, all QoS attributes that larger is better. So we need to know which attributes are smaller is better.
+As the figure shown, "Response Time" and "Latency" should be selected.
+![Norm](fig/normalize.jpg)
+#### Step 4. Run
+Click "Run", you can get the result.
+![Norm](fig/result.jpg)
 ## Feedback
 
-If you find any bugs or errors, please post to our [issue page](https://github.com/jhzhang98/ISkySel/issues). Also for any enquire, you can drop an e-mail to our us [our mail here](mailto:1910644713@qq.com).
+If you find any bugs or errors, please post to our issue page.

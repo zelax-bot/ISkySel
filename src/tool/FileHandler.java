@@ -43,7 +43,7 @@ public class FileHandler {
         return null;
     }
 
-    public static double[][] readData(File file){
+    public static double[][] readData(File file) {
         List<double[]> data = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -70,6 +70,26 @@ public class FileHandler {
             for (int i = 0; i < data.size(); i++)
                 res[i] = data.get(i);
             return res;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String[] readAttribute(File file) {
+        List<String> res = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line = br.readLine();
+            while (null != line) {
+                String[] parts = line.split(",");
+                for (String part : parts) {
+                    res.add(part.trim());
+                }
+                line = br.readLine();
+            }
+            String[] attributes = new String[res.size()];
+            return res.toArray(attributes);
         } catch (IOException e) {
             e.printStackTrace();
         }

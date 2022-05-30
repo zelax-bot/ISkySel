@@ -2,7 +2,7 @@ package skyline;
 
 import java.util.*;
 
-public class ISkySel extends PSkyline {
+public class ISkySel extends PSky {
 
     private final List<Double> time = new ArrayList<>();
     private final String[] timeName = {"Init Hist", "计算所有interval概率", "每个维度挑topk", "计算全局topk"};
@@ -129,9 +129,6 @@ public class ISkySel extends PSkyline {
         }
 
         for (int i = topk - 1; i >= 0; i--) {
-//            if (i == 0 || i == topk - 1) {
-//                System.out.println(i + " prob: " + Arrays.toString(queue.peek()));
-//            }
             double[] cell = queue.poll();
             res[i] = (int) Math.ceil(cell[0]);
         }
@@ -303,9 +300,6 @@ public class ISkySel extends PSkyline {
         }
 
         for (int i = topk - 1; i >= 0; i--) {
-//            if (i == 0 || i == topk - 1) {
-//                System.out.println(i + " prob: " + Arrays.toString(queue.peek()));
-//            }
             double[] cell = queue.poll();
             res[i] = (int) Math.ceil(cell[0]);
         }

@@ -2,7 +2,7 @@ package skyline;
 
 import java.util.Arrays;
 
-public abstract class PSkyline {
+public abstract class PSky {
     protected double[][] cube;
     protected double[][] freq;
     protected int bins;
