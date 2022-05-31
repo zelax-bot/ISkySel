@@ -32,9 +32,13 @@ public class IntervalDemo {
      * p0 ------------ p1
      */
     private static double dominateProb(double[] cube, double[] freq, double[] prefixSum, double[] p, double[] q) {
-        return (0.5 * histProb(cube, freq, prefixSum, p[0], q[1]) * histProb(cube, freq, prefixSum, p[0], q[1]))
+        double localProb =
+                (0.5 * histProb(cube, freq, prefixSum, p[0], q[1]) * histProb(cube, freq, prefixSum, p[0], q[1]))
                 + histProb(cube, freq, prefixSum, q[1], p[1]) * histProb(cube, freq, prefixSum, q[0], q[1])
                 + histProb(cube, freq, prefixSum, p[0], q[1]) * histProb(cube, freq, prefixSum, q[0], p[0]);
+        double existProb = histProb(cube, freq, prefixSum, p[0], p[1])
+                * histProb(cube, freq, prefixSum, q[0], q[1]);
+        return localProb / existProb;
     }
 
     public static void main(String[] args) {
